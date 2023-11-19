@@ -25,7 +25,8 @@ const Register = () => {
             password:"",
             email:""
         })
-        Navigate('/login')
+        Navigate('/login',{state:{message:"not you have been redirected to login page"}})
+        
     }catch(e){
         setSereverErrors(e.response.data.errors)
         

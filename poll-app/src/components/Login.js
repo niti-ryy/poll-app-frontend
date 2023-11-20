@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState,useContext } from "react"
 import React from 'react'
 import { useLocation } from "react-router-dom"
 import axios from  "axios"
 import  {useNavigate} from "react-router-dom"
+import { userContext } from "../App"
 
 
 const Login = () => {
@@ -14,6 +15,7 @@ const Login = () => {
     const [serverErrors,setSereverErrors]=useState([])
     const location=useLocation()
     const navigate=useNavigate()
+    const {state,dispatch}=useContext(userContext) //using context 
     const message=location.state?location.state.message : ""
     const handleChange=(e)=>{
         const {name,value}=e.target
@@ -31,7 +33,8 @@ const Login = () => {
                 }
             })
             console.log(accountReponse.data)
-            navigate("/")
+            dispatch({type:"USER_LOGIN",payload:accountReponse.data})
+            navigate("/dashboard")
         }catch(e){
             setSereverErrors(e.response.data.errors)
            

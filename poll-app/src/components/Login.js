@@ -25,10 +25,16 @@ const Login = () => {
         try{
             const user=await axios.post("http://localhost:4096/auth/login",formData)
             localStorage.setItem("token",user.data.token)
+            const accountReponse=await axios.get("http://localhost:4096/api/users/account",{
+                headers:{
+                    "Authorization":localStorage.getItem("token")
+                }
+            })
+            console.log(accountReponse.data)
             navigate("/")
         }catch(e){
-            console.log(e)
-           setSereverErrors(e.response.data.errors)
+            setSereverErrors(e.response.data.errors)
+           
         }
         
     }

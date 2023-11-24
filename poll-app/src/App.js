@@ -10,7 +10,7 @@ import axios from "./components/config"
 import NavBar from "./components/Nav";
 import NewPoll from "./components/NewPoll";
 import MyPolls from "./components/MyPolls";
-
+import PollShow from "./components/PollShow";
 export const userContext=createContext()
 
 function App() {
@@ -27,7 +27,15 @@ function App() {
                     "Authorization":localStorage.getItem("token")
                 }
             })
-            dispatch({type:"USER_LOGIN",payload:response.data})   
+            dispatch({type:"USER_LOGIN",payload:response.data})
+            
+            const pollResponse=await axios.get("/api/polls/myPolls",{
+              headers:{
+                "Authorization":localStorage.getItem("token")
+            }
+          })
+          dispatch({type:"SET_MY_POLLS",payload:pollResponse.data})
+           
           }catch(e){
             alert(e.message)
           }
@@ -48,6 +56,7 @@ function App() {
           <Route path="/dashboard"element={<Dashboard/>}/>
           <Route path="/polls/new" element={<NewPoll/>}/>
           <Route path="/polls/my-polls" element={<MyPolls/>}/>
+          <Route path="/my-polls/:id" element={<PollShow/>}/>
         </Routes>
     </userContext.Provider>
   </BrowserRouter>

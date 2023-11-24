@@ -1,7 +1,7 @@
 import { useState,useContext } from "react"
 import React from 'react'
 import { useLocation } from "react-router-dom"
-import axios from  "axios"
+import axios from "./config"
 import  {useNavigate} from "react-router-dom"
 import { userContext } from "../App"
 
@@ -25,15 +25,23 @@ const Login = () => {
     const handleSubmit=async(e)=>{
         e.preventDefault()
         try{
-            const user=await axios.post("http://localhost:4096/auth/login",formData)
+            const user=await axios.post("/auth/login",formData)
             localStorage.setItem("token",user.data.token)
-            const accountReponse=await axios.get("http://localhost:4096/api/users/account",{
+            const accountReponse=await axios.get("/api/users/account",{
                 headers:{
                     "Authorization":localStorage.getItem("token")
                 }
             })
             console.log(accountReponse.data)
             dispatch({type:"USER_LOGIN",payload:accountReponse.data})
+
+            const pollResponse=await axios.get("/api/polls/myPolls",{
+                headers:{
+                  "Authorization":localStorage.getItem("token")
+              }
+            })
+            dispatch({type:"SET_MY_POLLS",payload:pollResponse.data})
+
             navigate("/dashboard")
         }catch(e){
             setSereverErrors(e.response.data.errors)

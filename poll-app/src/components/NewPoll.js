@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {useState} from "react"
-import axios from "axios"
-
+import axios from './config'
 const NewPoll = () => {
     const [question,setQuestion]=useState("")
     const [categories,setCategories]=useState([])
@@ -77,7 +76,7 @@ const NewPoll = () => {
         }
 
         try{
-            const response=await axios.post("http://localhost:4096/api/polls",formData,{
+            const response=await axios.post("/api/polls",formData,{
                 headers:{
                     "Authorization":localStorage.getItem("token")
                 }
@@ -96,11 +95,11 @@ const NewPoll = () => {
     return (
         <div >
             <h1>Add New Poll</h1>
-            <label>
+            <label htmlFor='question'>
                 Enter Question  :-
-                <input type="text" value={question} onChange={(e)=>{setQuestion(e.target.value)}}/>
+                <input type="text" value={question} id="question" onChange={(e)=>{setQuestion(e.target.value)}}/>
             </label><br/>
-            <label>
+            <label >
                 Select Category
                 <select value={category} onChange={(e)=>{setCategory(e.target.value)}}>
                     <option value="">Select</option>
@@ -115,15 +114,13 @@ const NewPoll = () => {
                 End Date
                 <input type='Date' value={endDate} onChange={(e)=>{setEndDate(e.target.value)}}/>
             </label><br/>
-            <label>
-               Add options
+            <label>Add options</label>
                {options.map((ele,i)=>{
                     return <div key={i}>
                         <input type="text" value={ele.optionText} onChange={(e)=>{handleOptionText(i,e.target.value)}}/>
                         <button onClick={()=>{handleRemoveOption(i)}}>remove</button>
                     </div>                   
                })}<br/>             
-            </label><br/>
             <button onClick={handleAddOption}>Add Option</button><br/>
             <button onClick={handleSubmit}>Submit</button>
         </div>

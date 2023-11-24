@@ -4,11 +4,12 @@ import { useContext } from 'react'
 
 const Dashboard = () => {
     const {state}=useContext(userContext)
-    console.log(state)
+    
   return (
     <div>
         <h2>Dashboard</h2>
-        <h3>welcome-..{state.user.username}</h3>  
+        <h3>welcome-{state.user.username}</h3>
+        <h2>Total Polls-{state.myPolls.length}</h2>
     </div>
 
   )

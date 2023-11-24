@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import axios from './config'
 import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
@@ -18,7 +18,7 @@ const Register = () => {
     const handleSubmit=async(e)=>{
     e.preventDefault()
     try{
-        const response=await axios.post("http://localhost:4096/auth/register",formData)
+        const response=await axios.post("/auth/register",formData)
         console.log(response.data)
         setFormData({
             username:"",

@@ -8,12 +8,14 @@ import Dashboard from "./components/Dashboard";
 import axios from "axios";
 
 import NavBar from "./components/Nav";
+import NewPoll from "./components/NewPoll";
 
 export const userContext=createContext()
 
 function App() {
   const [state,dispatch]=useReducer(userReducer,{user:{}})
 
+  
   useEffect(()=>{
     if(localStorage.getItem("token")){
       (async()=>{
@@ -42,6 +44,7 @@ function App() {
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/dashboard"element={<Dashboard/>}/>
+          <Route path="/polls/new" element={<NewPoll/>}/>
         </Routes>
     </userContext.Provider>
   </BrowserRouter>

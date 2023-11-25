@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {useState} from "react"
 import axios from './config'
+import { userContext } from '../App'
+import { useNavigate } from 'react-router-dom'
 const NewPoll = () => {
     const [question,setQuestion]=useState("")
     const [categories,setCategories]=useState([])
@@ -8,6 +10,8 @@ const NewPoll = () => {
     const [categoryName,setCategoryName]=useState("")
     const [endDate,setEndDate]=useState("")
     const [options,setOptions]=useState([])
+    const {dispatch}=useContext(userContext)
+    const Navigate=useNavigate()
 
     useEffect(()=>{
         (async()=>{
@@ -81,12 +85,13 @@ const NewPoll = () => {
                     "Authorization":localStorage.getItem("token")
                 }
             })
-            console.log(response.data)
+            dispatch({type:"ADD_MY_POLL",payload:response.data})
             setQuestion("")
             setEndDate("")
             setCategoryName("")
             setOptions([])
             setCategory("")
+            Navigate(`/my-polls/${response.data._id}`)
         }catch(e){
             alert(e.message)
         }

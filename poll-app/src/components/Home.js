@@ -4,7 +4,9 @@ import PollsList from './PollsList'
 
 const Home = () => {
   const {pollsState}=useContext(PollsContext)
+ 
   const polls=pollsState.activePolls
+  console.log(polls)
   return (
     <div>
         <h2>HOME</h2>

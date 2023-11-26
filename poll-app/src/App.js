@@ -11,10 +11,13 @@ import NavBar from "./components/Nav";
 import NewPoll from "./components/NewPoll";
 import MyPolls from "./components/MyPolls";
 import PollShow from "./components/PollShow";
+import pollsReducer from "./reducers/poll-reducer";
 export const userContext=createContext()
+export const PollsContext=createContext()
 
 function App() {
   const [state,dispatch]=useReducer(userReducer,{user:{},myPolls:[]})
+  const [pollsState,pollsDispatch]=useReducer(pollsReducer,{activePolls:[]})
   
 
   
@@ -41,10 +44,20 @@ function App() {
           }
       })()
     }
+    (async()=>{
+      try{
+        const pollsResponse=await axios.get("/api/polls/active")
+        console.log(pollsResponse.data)
+        pollsDispatch({type:"SET_ACTIVE_POLLS",payload:pollsResponse.data})
+      }catch(e){
+        alert(e.message)
+      }
+    })()
   },[])
   return (
   <BrowserRouter>
     <userContext.Provider value={{state,dispatch}}>
+      <PollsContext.Provider value={{pollsState,pollsDispatch}}>
         <div >
           <h1>Polling App</h1>
           <NavBar/>
@@ -58,6 +71,7 @@ function App() {
           <Route path="/polls/my-polls" element={<MyPolls/>}/>
           <Route path="/my-polls/:id" element={<PollShow/>}/>
         </Routes>
+        </PollsContext.Provider>
     </userContext.Provider>
   </BrowserRouter>
       

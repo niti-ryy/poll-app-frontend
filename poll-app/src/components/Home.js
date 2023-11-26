@@ -10,11 +10,6 @@ const Home = () => {
         <h2>HOME</h2>
         <h2>Active Polls-{polls.length}</h2>
         <PollsList polls={polls}/>
-        {/* <ul>
-          {active.map((ele)=>{
-            return <li key={poll._id}>{ele.question}</li>
-          })}
-        </ul> */}
     </div>
   )
 }

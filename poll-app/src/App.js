@@ -12,6 +12,7 @@ import NewPoll from "./components/NewPoll";
 import MyPolls from "./components/MyPolls";
 import PollShow from "./components/PollShow";
 import pollsReducer from "./reducers/poll-reducer";
+import SinglePole from "./components/SinglePole";
 export const userContext=createContext()
 export const PollsContext=createContext()
 
@@ -70,6 +71,7 @@ function App() {
           <Route path="/polls/new" element={<NewPoll/>}/>
           <Route path="/polls/my-polls" element={<MyPolls/>}/>
           <Route path="/my-polls/:id" element={<PollShow/>}/>
+          <Route path="/polls/:id" element={<SinglePole/>}/>
         </Routes>
         </PollsContext.Provider>
     </userContext.Provider>

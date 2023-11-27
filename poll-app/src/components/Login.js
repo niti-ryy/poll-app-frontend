@@ -1,6 +1,6 @@
 import { useState,useContext } from "react"
 import React from 'react'
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import axios from "./config"
 import  {useNavigate} from "react-router-dom"
 import { userContext } from "../App"
@@ -75,7 +75,8 @@ const Login = () => {
         <input type="password" onChange={handleChange} name="password" value={formData.password}/><br/>
         <input type="Submit" value="Submit"/> 
     </form>
-    
+
+    <b>New User ? <Link to="/register">Sign Up for free</Link></b>
 </div>
   )
 }
